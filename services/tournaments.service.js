@@ -8,6 +8,18 @@ export async function getAllTournaments() {
     .toArray();
 }
 
+export async function getTournamentById(id) {
+  try {
+    return await client
+      .db("tournamentApp")
+      .collection("tournaments")
+      .find({ _id: new ObjectId(id) })
+      .toArray();
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 export async function getFilteredTournaments(startDate, endDate) {
   return await client
     .db("tournamentApp")

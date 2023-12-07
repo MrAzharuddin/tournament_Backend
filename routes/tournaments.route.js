@@ -4,6 +4,7 @@ import {
   addTournament,
   checkTournamentExist,
   deleteTournament,
+  getTournamentById,
   getAllTournaments,
   getFilteredTournaments,
   isTournamentAlreadyExistById,
@@ -18,7 +19,7 @@ router.get("/all", verifyLoginToken, async function (request, response) {
     response.send({ message: "fetched", payload: allTournaments });
   } catch (err) {
     // console.log("error in getAllTournaments, ", err);
-    response.status(500).send({ message: "not fetched" });
+    response.status(500).send({ message: "not fetched", error: err });
   }
 });
 
@@ -37,6 +38,21 @@ router.get("/filtered", verifyLoginToken, async function (request, response) {
   } catch (err) {
     // console.log("error in getFilteredTournaments, ", err);
     response.status(500).send({ message: "not fetched" });
+  }
+});
+
+router.get("/:id", verifyLoginToken, async function (request, response) {
+  try {
+    const { id } = request.params;
+    const tournamentById = await getTournamentById(id);
+    // console.log("filtered tournaments, ", filteredTournaments);
+    response.send({
+      message: "tournament fetched",
+      payload: tournamentById,
+    });
+  } catch (err) {
+    // console.log("error in getFilteredTournaments, ", err);
+    response.status(500).send({ message: "not fetched", error: err });
   }
 });
 

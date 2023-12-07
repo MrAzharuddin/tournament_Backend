@@ -154,4 +154,5 @@ router.get("/tournamentParticipants", async function (request, response) {
     response.status(500).send({ message: err.message });
   }
 });
+
 export default router;
